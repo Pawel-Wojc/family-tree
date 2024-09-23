@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { Logo } from "./components/Logo.tsx";
-import { GradientText } from "./components/GradientText.tsx";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "./../../redux/store.ts";
-import { loginUser } from "../../redux/slices/userSlices/cases/login.ts";
 import { useDispatch } from "react-redux";
 import { validateJwt } from "../../redux/slices/userSlices/cases/verifyToken.ts";
 import { registerUser } from "../../redux/slices/userSlices/cases/register.ts";
@@ -13,7 +11,11 @@ import Popup from "reactjs-popup";
 import { Eula } from "../../globalComponents/modals/Eula.tsx";
 
 export const RegisterRoute = () => {
-    const [loginData, setLoginData] = useState({ email: "", password: "", name: "" });
+    const [loginData, setLoginData] = useState({
+        email: "",
+        password: "",
+        name: "",
+    });
     const [emailError, setEmailError] = useState("");
     const [passError, setPasssError] = useState("");
     const [nameError, setNameError] = useState("");
@@ -26,7 +28,9 @@ export const RegisterRoute = () => {
             return {
                 ...prev,
                 [e.target.name]:
-                    e.target.name != "name" ? e.target.value.replace(/\s/g, "") : e.target.value,
+                    e.target.name != "name"
+                        ? e.target.value.replace(/\s/g, "")
+                        : e.target.value,
             };
         });
     };
@@ -34,7 +38,8 @@ export const RegisterRoute = () => {
     useEffect(() => {
         // must be redone to another protector.
         const tokenString = localStorage.getItem("JWTtoken");
-        if (!tokenString) return console.error("token from local storage is null");
+        if (!tokenString)
+            return console.error("token from local storage is null");
         dispatch(validateJwt(tokenString || "")).then(() => navigate("/trees"));
     }, []);
 
@@ -69,11 +74,15 @@ export const RegisterRoute = () => {
         return true;
     };
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSubmit = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
         e.preventDefault();
         if (handlePassword() && handleEmailSyntax()) {
             console.log(loginData);
-            return dispatch(registerUser(loginData)).then(() => navigate("/login"));
+            return dispatch(registerUser(loginData)).then(() =>
+                navigate("/login")
+            );
         }
         toast.error("invalid register data");
     };
@@ -84,8 +93,12 @@ export const RegisterRoute = () => {
                 <article className="flex flex-col w-1/2">
                     <Logo />
                     <form action="#" className="w-full">
-                        <p className="mt-10 mb-5 text-lg title text-center">Register new account</p>
-                        <p className="w-full mb-1 pl-4 text-error text-sm">{emailError}</p>
+                        <p className="mt-10 mb-5 text-lg title text-center">
+                            Register new account
+                        </p>
+                        <p className="w-full mb-1 pl-4 text-error text-sm">
+                            {emailError}
+                        </p>
                         <input
                             className="w-full mb-4"
                             type="email"
@@ -95,7 +108,9 @@ export const RegisterRoute = () => {
                             onChange={(e) => handleForm(e)}
                             onBlur={() => handleEmailSyntax()}
                         />
-                        <p className="w-full mb-1 pl-4 text-error text-sm">{passError}</p>
+                        <p className="w-full mb-1 pl-4 text-error text-sm">
+                            {passError}
+                        </p>
                         <input
                             className="w-full mb-4"
                             type="password"
@@ -105,7 +120,9 @@ export const RegisterRoute = () => {
                             onChange={(e) => handleForm(e)}
                             onBlur={() => handlePassword()}
                         />
-                        <p className="w-full mb-1 pl-4 text-error text-sm">{nameError}</p>
+                        <p className="w-full mb-1 pl-4 text-error text-sm">
+                            {nameError}
+                        </p>
                         <input
                             className="w-full"
                             type="text"
@@ -115,7 +132,10 @@ export const RegisterRoute = () => {
                             onChange={(e) => handleForm(e)}
                             onBlur={() => handleName()}
                         />
-                        <button onClick={(e) => handleSubmit(e)} className="w-full gradient-button">
+                        <button
+                            onClick={(e) => handleSubmit(e)}
+                            className="w-full gradient-button"
+                        >
                             Register
                         </button>
                         <p className="pt-4 text-center">

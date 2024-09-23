@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Tree } from "../../treeSlice.ts";
-import * as d3 from "d3";
 
 const exampleTree: Array<Tree> = [
     {
@@ -22,9 +21,9 @@ export const fetchTrees = createAsyncThunk(
             console.log("thunk running");
             setTimeout(() => {
                 // res(exampleTree);
-                if (true) {
-                    res(exampleTree);
-                }
+
+                res(exampleTree);
+
                 rej(new Error("test promise error"));
             }, 1000);
         })

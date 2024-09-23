@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "./../../redux/store.ts";
 import { loginUser } from "../../redux/slices/userSlices/cases/login.ts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { validateJwt } from "../../redux/slices/userSlices/cases/verifyToken.ts";
 
 export const LoginRoute = () => {
@@ -28,7 +28,8 @@ export const LoginRoute = () => {
     useEffect(() => {
         // must be redone to another protector.
         const tokenString = localStorage.getItem("JWTtoken");
-        if (!tokenString) return console.error("token from local storage is null");
+        if (!tokenString)
+            return console.error("token from local storage is null");
         dispatch(validateJwt(tokenString || "")).then(() => navigate("/trees"));
     }, []);
 
@@ -53,7 +54,9 @@ export const LoginRoute = () => {
         return true;
     };
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSubmit = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
         e.preventDefault();
         if (handlePassword() && handleEmailSyntax()) {
             console.log(loginData);
@@ -77,8 +80,12 @@ export const LoginRoute = () => {
                 <article className="flex flex-col 2xl:w-1/2 w-3/4 ">
                     <Logo />
                     <form action="#" className="w-full">
-                        <p className="mt-10 mb-5 text-lg">Please login to your account</p>
-                        <p className="w-full mb-1 pl-4 text-error text-sm">{emailError}</p>
+                        <p className="mt-10 mb-5 text-lg">
+                            Please login to your account
+                        </p>
+                        <p className="w-full mb-1 pl-4 text-error text-sm">
+                            {emailError}
+                        </p>
                         <input
                             className="w-full mb-4"
                             type="email"
@@ -88,7 +95,9 @@ export const LoginRoute = () => {
                             onChange={(e) => handleForm(e)}
                             onBlur={() => handleEmailSyntax()}
                         />
-                        <p className="w-full mb-1 pl-4 text-error text-sm">{passError}</p>
+                        <p className="w-full mb-1 pl-4 text-error text-sm">
+                            {passError}
+                        </p>
                         <input
                             className="w-full"
                             type="password"
@@ -98,13 +107,19 @@ export const LoginRoute = () => {
                             onChange={(e) => handleForm(e)}
                             onBlur={() => handlePassword()}
                         />
-                        <button onClick={(e) => handleSubmit(e)} className="w-full gradient-button">
+                        <button
+                            onClick={(e) => handleSubmit(e)}
+                            className="w-full gradient-button"
+                        >
                             Login
                         </button>
                     </form>
                     <div className="w-full flex justify-between 2xl:mt-[8rem] mt-[4rem] items-center">
                         <p>Don't have an account?</p>
-                        <button onClick={() => navigate("/register")} className="register-button">
+                        <button
+                            onClick={() => navigate("/register")}
+                            className="register-button"
+                        >
                             Register
                         </button>
                     </div>

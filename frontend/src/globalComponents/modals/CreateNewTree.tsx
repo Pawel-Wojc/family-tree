@@ -13,7 +13,11 @@ export const CreateNewTree: React.FC<{ close: () => void }> = ({ close }) => {
     const [name, setName] = useState("");
     const userData = useSelector((root: RootState) => root.user);
     const handleFile = (file: File) => {
-        if (file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg") {
+        if (
+            file.type == "image/png" ||
+            file.type == "image/jpeg" ||
+            file.type == "image/jpg"
+        ) {
             let image = new Image();
 
             image.onload = () => {
@@ -80,7 +84,7 @@ export const CreateNewTree: React.FC<{ close: () => void }> = ({ close }) => {
                     .catch(() => {});
             });
         }
-        return toast.error("not enough data provided");
+        return toast.error("Photo is required and name is required");
     };
 
     return (
@@ -113,8 +117,10 @@ export const CreateNewTree: React.FC<{ close: () => void }> = ({ close }) => {
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                     <DownloadIcon className="w-12 h-12 mb-4" />
                                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                        <span className="font-semibold">Click to upload</span> or
-                                        drag and drop
+                                        <span className="font-semibold">
+                                            Click to upload
+                                        </span>{" "}
+                                        or drag and drop
                                     </p>
                                     <p className="text-xs text-gray-500 dark:text-gray-400">
                                         PNG, JPG (PREFERABLY. 800x400px)
@@ -137,7 +143,10 @@ export const CreateNewTree: React.FC<{ close: () => void }> = ({ close }) => {
                     placeholder="tree name"
                     className="mt-5 text-center w-1/2"
                 />
-                <button onClick={() => handleCrateTree()} className="gradient-button w-1/2">
+                <button
+                    onClick={() => handleCrateTree()}
+                    className="gradient-button w-1/2"
+                >
                     Create Tree
                 </button>
             </div>

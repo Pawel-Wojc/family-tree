@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Tree } from "../treeSlice";
 
 export const removeTree = createAsyncThunk(
     "trees/removeTree",

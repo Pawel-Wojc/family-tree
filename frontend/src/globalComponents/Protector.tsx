@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/store.ts";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { validateJwt } from "../redux/slices/userSlices/cases/verifyToken.ts";
 
 export const Protector = () => {
@@ -13,5 +13,11 @@ export const Protector = () => {
         if (!tokenString) console.error("token from local storage is null");
         dispatch(validateJwt(tokenString || "")).then(() => setVerified(true));
     }, []);
-    return <>{verified && <>{userData.userData ? <Outlet /> : <Navigate to="/login" />}</>}</>;
+    return (
+        <>
+            {verified && (
+                <>{userData.userData ? <Outlet /> : <Navigate to="/login" />}</>
+            )}
+        </>
+    );
 };

@@ -107,9 +107,10 @@ export const treesSlice = createSlice({
         },
 
         setSelectedNode: (state, action: PayloadAction<Node>) => {
-            const newNodes: Array<Node & { selected: boolean }> = state.nodes.map((o) =>
-                o.id === action.payload.id ? { ...o, selected: true } : o
-            );
+            const newNodes: Array<Node & { selected: boolean }> =
+                state.nodes.map((o) =>
+                    o.id === action.payload.id ? { ...o, selected: true } : o
+                );
 
             state.nodes = newNodes;
         },
@@ -148,13 +149,19 @@ export const treesSlice = createSlice({
                     famMemId: o.familyMember,
                 };
             });
-            const newMembers = action.payload.members.map((member: FamilyMember) => {
-                return {
-                    ...member,
-                    birthDate: member.birthDate ? new Date(member.birthDate) : null,
-                    deathDate: member.deathDate ? new Date(member.deathDate) : null,
-                };
-            });
+            const newMembers = action.payload.members.map(
+                (member: FamilyMember) => {
+                    return {
+                        ...member,
+                        birthDate: member.birthDate
+                            ? new Date(member.birthDate)
+                            : null,
+                        deathDate: member.deathDate
+                            ? new Date(member.deathDate)
+                            : null,
+                    };
+                }
+            );
 
             // initialize new State with new properties
             const newState: EditedTree = {
@@ -322,7 +329,9 @@ export const treesSlice = createSlice({
                     isLoading: false,
                     autoClose: 2000,
                 });
-            const newNodes = state.nodes.filter((o) => o.id != action.payload.id);
+            const newNodes = state.nodes.filter(
+                (o) => o.id != action.payload.id
+            );
             const newConnections = state.connections.filter(
                 (o) => o.from != action.payload.id && o.to != action.payload.id
             );
@@ -359,8 +368,10 @@ export const treesSlice = createSlice({
                     isLoading: false,
                     autoClose: 2000,
                 });
-            const [node1, node2] = action.payload;
-            const newConnections = state.connections.filter((o) => o.id != action.payload);
+
+            const newConnections = state.connections.filter(
+                (o) => o.id != action.payload
+            );
             const newNodes = state.nodes.map((o) => {
                 return {
                     ...o,
@@ -432,7 +443,9 @@ export const treesSlice = createSlice({
         });
         builder.addCase(uploadImage.fulfilled, (state, action) => {
             state.status = status.loaded;
-            state.tempImageAddr = `${import.meta.env.VITE_API_URL}/assets/${action.payload}`;
+            state.tempImageAddr = `${import.meta.env.VITE_API_URL}/assets/${
+                action.payload
+            }`;
         });
         builder.addCase(uploadImage.rejected, () => {
             toast.error("failed to upload image", {
@@ -444,6 +457,7 @@ export const treesSlice = createSlice({
     },
 });
 
-export const { setMouseMode, setSelectedNode, resetSelection } = treesSlice.actions;
+export const { setMouseMode, setSelectedNode, resetSelection } =
+    treesSlice.actions;
 
 export default treesSlice.reducer;
